@@ -24,15 +24,11 @@ const readFilePromise = (file, options) =>
     });
   });
 
-const exists = (answer, dataFile) =>
-  new Promise((resolve, reject) => {
-    if (dataFile.indexOf(answer) !== -1) {
-      resolve(true);
-      return;
-    }
-    resolve(false);
-    return;
-  });
+const exists = (answer, dataFile) => (
+  (dataFile.indexOf(answer) !== -1) ?
+  true :
+  false
+);
 
 const init = async (message, file, options) => {
   const answer = await questionPromise(message);
@@ -40,8 +36,10 @@ const init = async (message, file, options) => {
   rl.close();
   const dataFile = await readFilePromise(file, options);
   console.log(dataFile);
-  const result = await exists(answer, data);
+  const result = exists(answer, data);
   console.log(result);
 };
 
-init("Escribe algo que quieras buscar: ", "texto.txt", { encoding: "utf8" });
+init("Escribe algo que quieras buscar: ", "texto.txt", {
+  encoding: "utf8"
+});
